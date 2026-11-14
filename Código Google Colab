@@ -1,0 +1,115 @@
+#Python
+# Proyecto: Evaluador de crédito basado en conocimiento experto
+# Integrantes: Oscar Esteban Sánchez Leyva
+# Descripción: Aplicar reglas condicionales para simular la evaluación de créditos.
+# Nota: Todos los datos son ficticios y los criterios son académicos.
+
+print("Sistema de Evaluación de Crédito – Tienda Sara")
+print("Autores: Oscar Esteban Sánchez Leyva")
+print("Objetivo: Aplicar reglas condicionales para simular la evaluación de créditos.")
+
+def evaluar_credito(nombre, ingresos, historial, antiguedad_meses, deuda_total):
+    score = 0
+    razones = []
+    
+    # Regla 1: ingresos mensuales >= $25,000
+    if ingresos >= 25000:
+        score += 2
+        razones.append("Ingresos suficientes")
+    else:
+        razones.append("Ingresos bajos")
+        
+    # Regla 2: historial crediticio
+    if historial == "limpio":
+        score += 2
+        razones.append("Historial limpio")
+    elif historial == "regular":
+        score += 1
+        razones.append("Historial con observaciones")
+    else:
+        razones.append("Historial negativo")
+        
+    # Regla 3: antigüedad laboral >= 12 meses
+    if antiguedad_meses >= 12:
+        score += 1
+        razones.append("Antigüedad suficiente")
+    else:
+        razones.append("Antigüedad insuficiente")
+        
+    # Regla 4: deuda menor al 40% de los ingresos
+    if deuda_total < ingresos * 0.40:
+        score += 1
+        razones.append("Deuda bajo control")
+    else:
+        razones.append("Nivel de deuda alto")
+        
+    if score >= 5:
+        decision = "Aprobado"
+    elif 3 <= score < 5:
+        decision = "En revisión"
+    else:
+        decision = "Rechazado"
+        
+    print(f"\nEvaluación de {nombre}")
+    print(f"Puntuación: {score}/6")
+    print(f"Resultado: {decision}")
+    for razon in razones:
+        print(" -", razon)
+        
+    return decision
+
+# Lista de 30 clientes simulados
+clientes = [
+    {"nombre":"Ana", "ingresos":28000, "historial":"limpio", "antiguedad_meses":24, "deuda_total":4000},
+    {"nombre":"Luis", "ingresos":18000, "historial":"negativo", "antiguedad_meses":10, "deuda_total":15000},
+    {"nombre":"María", "ingresos":24000, "historial":"regular", "antiguedad_meses":12, "deuda_total":10000},
+    {"nombre":"Pedro", "ingresos":30000, "historial":"limpio", "antiguedad_meses":36, "deuda_total":5000},
+    {"nombre":"Carlos", "ingresos":20000, "historial":"negativo", "antiguedad_meses":5, "deuda_total":18000},
+    {"nombre":"Laura", "ingresos":33000, "historial":"limpio", "antiguedad_meses":18, "deuda_total":7000},
+    {"nombre":"Iván", "ingresos":16000, "historial":"regular", "antiguedad_meses":6, "deuda_total":8000},
+    {"nombre":"Sandra", "ingresos":27000, "historial":"limpio", "antiguedad_meses":14, "deuda_total":4000},
+    {"nombre":"Diego", "ingresos":12000, "historial":"negativo", "antiguedad_meses":4, "deuda_total":6000},
+    {"nombre":"Valeria", "ingresos":25000, "historial":"regular", "antiguedad_meses":10, "deuda_total":9500},
+    {"nombre":"Rubén", "ingresos":19000, "historial":"regular", "antiguedad_meses":13, "deuda_total":8500},
+    {"nombre":"Claudia", "ingresos":31000, "historial":"limpio", "antiguedad_meses":22, "deuda_total":3000},
+    {"nombre":"Oscar", "ingresos":15000, "historial":"negativo", "antiguedad_meses":9, "deuda_total":11000},
+    {"nombre":"Lucía", "ingresos":26000, "historial":"limpio", "antiguedad_meses":11, "deuda_total":4000},
+    {"nombre":"Sofía", "ingresos":29000, "historial":"limpio", "antiguedad_meses":16, "deuda_total":2000},
+    {"nombre":"Andrés", "ingresos":17000, "historial":"regular", "antiguedad_meses":7, "deuda_total":7000},
+    {"nombre":"Natalia", "ingresos":22000, "historial":"regular", "antiguedad_meses":10, "deuda_total":9500},
+    {"nombre":"Fernando", "ingresos":34000, "historial":"limpio", "antiguedad_meses":28, "deuda_total":12000},
+    {"nombre":"Isabel", "ingresos":20000, "historial":"regular", "antiguedad_meses":14, "deuda_total":4000},
+    {"nombre":"Pablo", "ingresos":27000, "historial":"limpio", "antiguedad_meses":12, "deuda_total":4500},
+    {"nombre":"Gabriela", "ingresos":18000, "historial":"negativo", "antiguedad_meses":6, "deuda_total":9000},
+    {"nombre":"Javier", "ingresos":25000, "historial":"regular", "antiguedad_meses":11, "deuda_total":9800},
+    {"nombre":"Camila", "ingresos":31000, "historial":"limpio", "antiguedad_meses":20, "deuda_total":3500},
+    {"nombre":"Emilio", "ingresos":16000, "historial":"negativo", "antiguedad_meses":8, "deuda_total":6000},
+    {"nombre":"Paula", "ingresos":28000, "historial":"limpio", "antiguedad_meses":17, "deuda_total":4800},
+    {"nombre":"Gerardo", "ingresos":19000, "historial":"regular", "antiguedad_meses":10, "deuda_total":7500},
+    {"nombre":"Rosa", "ingresos":36000, "historial":"limpio", "antiguedad_meses":30, "deuda_total":6000},
+    {"nombre":"Tomás", "ingresos":23000, "historial":"regular", "antiguedad_meses":15, "deuda_total":8900},
+    {"nombre":"Elena", "ingresos":27000, "historial":"limpio", "antiguedad_meses":19, "deuda_total":3000},
+    {"nombre":"Axel", "ingresos":14000, "historial":"negativo", "antiguedad_meses":4, "deuda_total":9200}
+]
+
+# Evaluar los 30 clientes
+resultados = []
+for cliente in clientes:
+    decision = evaluar_credito(
+        cliente["nombre"], cliente["ingresos"], cliente["historial"],
+        cliente["antiguedad_meses"], cliente["deuda_total"]
+    )
+    resultados.append({"nombre": cliente["nombre"], "decision": decision})
+    print("-" * 50)
+
+# Contabilizar resultados
+aprobados = sum(1 for r in resultados if r["decision"] == "Aprobado")
+revisiones = sum(1 for r in resultados if r["decision"] == "En revisión")
+rechazados = sum(1 for r in resultados if r["decision"] == "Rechazado")
+
+print("\nRESUMEN GENERAL")
+print("Total de clientes:", len(clientes))
+print("Aprobados:", aprobados)
+print("En revisión:", revisiones)
+print("Rechazados:", rechazados)
+
